@@ -157,6 +157,117 @@ Agora voltamos ao nosso componente e adicionamos este estilo importando nosso ar
 import "./styles.css";
 ```
 
+## Buscando produtos em uma API Externa com Axios
+
+Para começarmos com a busca pela API de um endereço externo, utilizaremos o **Axios**, vamos começar instalando essa dependência ao nosso projeto então.
+
+```
+yarn add axios
+```
+
+Após ter instalado a dependência, vamos criar uma pasta em nossa raiz, neste caso *src* com o nome de **services**, onde irá ter todos os arquivos relacionados aos nossos serviços.
+
+Dentro deste diretório, vamos criar um arquivo com o nome de **api.js** que será responsável pela conexão com nossa API.
+
+```typescript
+import axios from "axios";
+
+const api = axios.create({ 
+  baseURL: 'https://rocketseat-node.herokuapp.com/api' 
+});
+
+export default api;
+```
+
+> Criamos uma constante para nossa **API**, utilizamos o *create* para criar a conexão e o *baseURL* com o endereço de nossa **API**.
+
+Vamos então ao nosso arquivo base, *App.js* e importamos nossa **API** para lá.
+
+```typescript
+import api from "./services/api";
+```
+
+Iremos fazer os conteúdos de nossa aplicação separados em um diretório chamado de *pages*.
+
+Dentro do pages vamos criar a primeira página, então criamos uma pasta com o nome de *main* e dentro dela o arquivo *index.js*
+
+```typescript
+import React, { Component } from "react";
+
+import api from "../../services/api";
+
+export default class Main extends Component {
+  render() {
+    return <h1>Hello RocketSeat!</h1>
+  }
+}
+```
+
+> Importamos o React e seu Component padrão, criamos uma classe já exportando, e chamamos o método render.
+
+Com isso feito, vamos então ao nosso componente principal, localizado no *App.js* em nossa raíz, e importamos esta nossa página.
+
+```typescript
+import React, { Component } from "react";
+import api from "./services/api";
+
+import "./styles.css";
+
+import Header from "./components/Header";
+import Main from "./pages/main";
+
+const App = () => (
+  <div className="App">
+    <Header />
+    <Main />
+  </div>
+);
+
+export default App;
+```
+
+Vamos então agora fazer a chamada a nossa API, o *React* possui metódos de ciclos de vida, que são utilizados assim que o componente é exibido na tela.
+
+Quando queremos executar uma ação logo quando o componente é exibido em tela utilizamos o **componentDidMount**.
+
+Então dentro do nosso arquivo *index.js* do **Main**, vamos chamar o método *componentDidMount*.
+
+```typescript
+componentDidMount() {
+  this.loadProducts();
+}
+
+loadProducts = () => {
+
+}
+```
+
+Quando utilizamos funções nativas do React, utilizamos por padrão **Named Function**.
+
+```typescript
+componentDidMount() {
+  this.loadProducts();
+}
+```
+
+Agora quando criamos um função própria, temos que utilizar **Arrow Function**, se não nossa função não consiguirá enxergar o escopo da variável *this*.
+
+```typescript
+loadProducts = () => {
+
+};
+```
+
+Com isso já feito, vamos agora então acessar a nossa API, para isso, vamos fazer o seguinte:
+
+```typescript
+loadProducts = async () => {
+ const response = await api.get('/products');
+};
+```
+
+> Utilizamos o **async** e o **await** para lidar com os *Promisses* do JavaScript de forma mais verbosa.
+
 
 
 
