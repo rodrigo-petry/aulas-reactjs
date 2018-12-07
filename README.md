@@ -49,6 +49,8 @@ class App extends Component {
 export default App;
 ```
 
+> Utilizamos **className** pelo fato da palavra **class** ser reservada do próprio *JavaScript*.
+
 Nada mais é do que uma classe que importa e extende por padrão a classe *Component* do React. 
 
 ### Arquivos dos Componentes gerados
@@ -80,3 +82,81 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 > Estamos pegando nossa render e jogando na tag *HTML* chamada de **Root** localizada no *index.html*.
+
+### Criando o primeiro Componente
+
+Nosso primeiro componente a ser criado será o *Header*, para isso vamos a nossa pasta **src** e criaremos uma pasta chamada de *components* que será responsável por nossos componentes.
+
+Após termos criado nosso diretório, vamos então criar nosso arquivo *index.js* dentro da pasta **Header**.
+
+Dentro então do nosso arquivo *index.js* começamos com as configurações inicias já faladas anteriormente.
+
+```typescript
+import React from 'react';
+
+const Header = () => (
+  <header id="main-header">JSHunt</header>
+);
+
+export default Header;
+```
+
+> Ao invés de utilizarmos classes como padrão, vamos estar utilizando **Stateless Component**.
+
+#### Stateless Component
+
+Possui a sintaxe mais simplifacada do que a padrão, observamos a seguir a forma padrão:
+
+```typescript
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h1>Hello RocketSeat!</h1>
+      </div>
+    );
+  }
+}
+```
+
+Agora vemos como fica a sintaxe utilizando **Stateless Component**:
+
+```typescript
+const App = () => (
+  <div className="App">
+    <Header />
+  </div>
+);
+
+export default App;
+```
+
+#### Adicionado estilos aos nossos Componentes
+
+Vamos até o diretório de nosso componente e criamos o arquivo *styles.css*, deixando os estilos de forma unificada.
+
+Adicionamos os estilos desejados dentro de nosso arquivo, da seguinte forma: 
+
+```css
+header#main-header {
+  width: 100%;
+  height: 60px;
+  background-color: #da552f;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+Agora voltamos ao nosso componente e adicionamos este estilo importando nosso arquvo css.
+
+```typescript
+import "./styles.css";
+```
+
+
+
+
