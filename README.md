@@ -268,6 +268,69 @@ loadProducts = async () => {
 
 > Utilizamos o **async** e o **await** para lidar com os *Promisses* do JavaScript de forma mais verbosa.
 
+### Armazenando os valores no estado
 
+No *React* temos um conceito chamado de estado, e conseguimos criar esta variável de estado, simplesmente utilizando a seguinte sintaxe:
 
+```typescript
+state = {
+  products: [],
+};
+```
+
+> Podemos armazenar nossos valores da *Api* dentro de nosso estado, vamos iniciar com um array vazio, por enquanto.
+
+É importante utilizar o *state* pois o *render* de nossa aplicação pode depender dele, mas como fazer para atribuir um valor para nosso estado ?
+
+Basta seguir o código abaixo:
+
+```typescript
+state = {
+  products: [],
+};
+
+loadProducts = async() => {
+  const reponse = await api.get("/products");
+
+  this.setState({ products: response.data.docs })
+};
+
+render() {
+  return <h1>Contagem:{this.state.products.lenght}</h1>
+}
+```
+
+> O método *render* ficará **escutando** as alterações no nosso estado.
+
+Para por exemplo buscar os títulos dos produtos de nossa aplicação, poderiamos fazer a seguinte mudança, de acordo com o que foi citado acima:
+
+```typescript
+render() {
+  return() {
+    <div className="product-list">
+      {this.state.products.map(product => (
+        <h2>{product.title}</h2>
+      ))}
+    </div>
+  }
+}
+```
+
+Utilizamos o **.map** para percorrer a nossa lista de produtos e *Arrow Function* para atribuir cada produto, a uma variável chamada de *product*, então pegamos a propriedade **title** de nossos produtos.
+
+> Porém se utilizarmos do jeito acima, o console irá alertar de um erro.
+
+Pois o *React* necessita que você crie uma *key*, que nada mais é do que um valor único de cada produto da sua lista, então neste caso, podemos utilizar o *_id* .
+
+```typescript
+render() {
+  return() {
+    <div className="product-list">
+      {this.state.products.map(product => (
+        <h2 key={product._id}>{product.title}</h2>
+      ))}
+    </div>
+  }
+}
+```
 
